@@ -1,18 +1,32 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {NumericFormat} from "react-number-format"
 
 
-const FormService = () => {
-  const [formData, setFormData] = useState ({
 
-  })
+const FormService = () => {
+  const [formData, setFormData] = useState ({})
+  const [clients, setClients] = React.useState([]);
+
+  React.useEffect(() =>{
+    fetch("/clients")
+      .then((res) => res.json())
+      .then((clients) => setClients(clients))
+  }, [])
+  console.log(clients)
+
 
   return (
     <form>
       <div>
         <label>
           Cliente:
-          <input type="Select" name="nome" />
+          <select name="cliente">
+            {clients.map((clients) => (
+              <option key={clients.id} value={clients.id}>
+                {clients.nome}
+              </option>
+            ))}
+          </select>
         </label>
       </div>
       <div style={{ display: 'flex' }}>
@@ -47,14 +61,18 @@ const FormService = () => {
           fixedDecimalScale
           allowNegative={false}
           isNumericString
-          customInput={inputProps => <input {...inputProps} />}
+          customInput={inputProps => <input required {...inputProps} />}
         />
         </label>
       </div>
       <div>
         <label>
           Forma de Pagamento:
-          <input maxLength={11} type="text" name="cpf"/>
+          <select name="pagamento">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+            <option value="Vale Presente">Vale Presente</option>
+          </select>
         </label>
       </div>
       <button type="submit">Enviar</button>

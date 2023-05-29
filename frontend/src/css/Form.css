@@ -13,13 +13,22 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"] {
+input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-family: sans-serif
 }
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: sans-serif
+}
+
 
 button {
   display: block;
