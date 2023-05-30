@@ -1,6 +1,7 @@
 import express from "express"
 import clients from "./src/controllers/clients.js"
 import services from "./src/controllers/services.js";
+import procedures from "./src/controllers/procedure.js";
 
 const routes = express.Router()
 
@@ -22,7 +23,7 @@ routes.delete("/deleteServices/:id", services.deleteService);
 
 //Procedimentos
 routes.get("/procedures", procedures.findAll);
-routes.get("/getProcedures", procedures.getProcedure);
+routes.get("/getProcedures", procedures.findProcedure);
 routes.post("/createProcedures", procedures.addProcedure);
 routes.get("/procedures/:id", procedures.findProcedure);
 routes.put("/updateProcedures/:id", procedures.updateProcedure);
