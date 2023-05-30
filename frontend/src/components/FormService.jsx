@@ -7,6 +7,7 @@ const FormService = () => {
   const [formData, setFormData] = useState ({})
   const [clients, setClients] = React.useState([]);
 
+  //Trazer clientes do bd
   React.useEffect(() =>{
     fetch("/clients")
       .then((res) => res.json())
@@ -14,13 +15,48 @@ const FormService = () => {
   }, [])
   console.log(clients)
 
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+
+    const sobrancelha = e.target.elements.sobrancelha.checked;
+    const boca = e.target.elements.boca.checked;
+    const olhos = e.target.elements.olhos.checked;
+    const capilar = e.target.elements.capilar.checked;
+    const valor = e.target.elements.valor.value;
+    const pagamento = e.target.elements.pagamento.value;
+    const clientId = e.target.elements.clientId.value;
+
+    const formData = {
+      procedimento: { sobrancelha, boca, olhos, capilar},
+      valor,
+      pagamento,
+      clientId,
+    }
+
+    fetch("/createServices", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      window.location.reload()
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
 
   return (
-    <form>
+    <form onSubmit={handleSubmit} >
       <div>
         <label>
           Cliente:
-          <select name="cliente">
+          <select name="clientId">
             {clients.map((clients) => (
               <option key={clients.id} value={clients.id}>
                 {clients.nome}
@@ -33,36 +69,27 @@ const FormService = () => {
         <label style={{ marginRight: '10px' }}>
           Procedimento:
         </label>
-        <label htmlFor="unhas" style={{ marginRight: '10px' }}>
+        <label htmlFor="sobrancelha" style={{ marginRight: '10px' }}>
           Sobrancelha
-          <input type="checkbox" name="unhas" />
-        </label>
-        <label htmlFor="unhas" style={{ marginRight: '10px' }}>
+          <input type="checkbox" name="sobrancelha" value="Sobrancelha" />
+        </label> 
+        <label htmlFor="boca" style={{ marginRight: '10px' }}>
           Boca
-          <input type="checkbox" name="unhas" />
+          <input type="checkbox" name="boca" value="Boca"  />
         </label>
-        <label htmlFor="unhas" style={{ marginRight: '10px' }}>
+        <label htmlFor="olhos" style={{ marginRight: '10px' }}>
           Olhos
-          <input type="checkbox" name="unhas" />
+          <input type="checkbox" name="olhos" value="Olhos" />
         </label>
-        <label htmlFor="unhas" style={{ marginRight: '10px' }}>
+        <label htmlFor="capilar" style={{ marginRight: '10px' }}>
           Capilar
-          <input type="checkbox" name="unhas" />
+          <input type="checkbox" name="capilar" value="Capilar"/>
         </label>
       </div>
       <div>
         <label>
           Valor:
-          <NumericFormat
-          thousandSeparator="."
-          decimalSeparator=","
-          prefix="R$ "
-          decimalScale={2}
-          fixedDecimalScale
-          allowNegative={false}
-          isNumericString
-          customInput={inputProps => <input required {...inputProps} />}
-        />
+          <input type="number" name="valor" />
         </label>
       </div>
       <div>
