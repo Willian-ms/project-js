@@ -20,5 +20,13 @@ routes.get("/services/:id", services.findService);
 routes.put("/updateServices/:id", services.updateService);
 routes.delete("/deleteServices/:id", services.deleteService);
 
+//Procedimentos
+routes.get("/procedures", procedures.findAll);
+routes.get("/getProcedures", procedures.getProcedure);
+routes.post("/createProcedures", procedures.addProcedure);
+routes.get("/procedures/:id", procedures.findProcedure);
+routes.put("/updateProcedures/:id", procedures.updateProcedure);
+routes.delete("/deleteProcedures/:id", procedures.deleteProcedure);
+
 
 export {routes as default}
