@@ -1,12 +1,18 @@
 import ServiceRepository from "../models/servicesModel.js"
 import client from "../models/clientsModel.js"
+//import procedure from "../models/procedureModel.js"
 
 function getService(req, res) {
   ServiceRepository.findAll({
     include: [{
       model: client,
-      attributes: ['nome']
-    }]
+      attributes: ['nome'] 
+    },/*
+     {
+      model: procedure,
+      attributes: ['procedimento']
+     }*/
+    ],
   })
   .then((ServiceRepository) =>{
     res.json(ServiceRepository)
@@ -29,7 +35,7 @@ function addService(req, res) {
     procedimento: req.body.procedimento,
     valor: req.body.valor,
     forma_pagamento:req.body.pagamento,
-    clientId: req.body.clientId
+    client_id: req.body.client_id
   }).then((result) => res.json(result));
 }
 

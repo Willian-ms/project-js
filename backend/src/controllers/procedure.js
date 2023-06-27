@@ -1,4 +1,4 @@
-import ProcedureRepository from "../models/procedureModel.js"
+/*import ProcedureRepository from "../models/procedureModel.js"
 
 
 function findAll(req, res) {
@@ -41,3 +41,4 @@ async function deleteProcedure(req, res) {
 }
 
 export default { findAll, addProcedure, findProcedure, updateProcedure, deleteProcedure };
+*/

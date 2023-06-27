@@ -1,8 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
-import db from '../db.js'; // Importe a instância do Sequelize e a configuração do banco de dados
-
+import db from '../db.js';
 import client from './clientsModel.js';
-import procedure from './procedureModel.js'
+//import procedure from './procedureModel.js'
 
 class Service extends Model {}
 
@@ -22,6 +21,10 @@ Service.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    procedimento: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize: db,
@@ -30,8 +33,8 @@ Service.init(
 );
 
 // Defina a associação belongsTo com o modelo Cliente
-Service.belongsTo(client, { foreignKey: 'clientId' });
-Service.belongsTo(procedure, {foreignKey: 'procedureId' })
+Service.belongsTo(client, { foreignKey: 'client_id' });
+//Service.belongsTo(procedure, { foreignKey: 'procedure_id'})
 
 
 export default Service;

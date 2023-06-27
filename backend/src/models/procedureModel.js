@@ -1,8 +1,8 @@
-import sequelize, { Sequelize } from "sequelize";
+/*import sequelize, { Sequelize } from "sequelize";
 import db from "../db.js"
 
 
-export default db.define("procedure", {
+const Procedure = db.define("procedure", {
   id: {
     type: Sequelize.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -11,6 +11,8 @@ export default db.define("procedure", {
   },
   procedimento: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
-})
+});
+
+export default Procedure;*/

@@ -1,13 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {NumericFormat} from "react-number-format"
 
 
 
 const FormService = () => {
-  const [formData, setFormData] = useState ({})
-  const [clients, setClients] = React.useState([]);
+//  const [formData, setFormData] = useState ({})
+  const [clients, setClients] = useState([]);
+  const [reais, setReais] = useState([]);
+//  const [procedures, setProcedures] = React.useState([]);
+  const handleReaisChange = (value) => {
+    setReais(value);
+  };
 
-  //Trazer clientes do bd
+
+  //cliente
   React.useEffect(() =>{
     fetch("/clients")
       .then((res) => res.json())
@@ -17,20 +23,16 @@ const FormService = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-
-    const sobrancelha = e.target.elements.sobrancelha.checked;
-    const boca = e.target.elements.boca.checked;
-    const olhos = e.target.elements.olhos.checked;
-    const capilar = e.target.elements.capilar.checked;
+    const client_id = e.target.elements.client_id.value;
+    const procedimento = e.target.elements.procedimento.value
     const valor = e.target.elements.valor.value;
     const pagamento = e.target.elements.pagamento.value;
-    const clientId = e.target.elements.clientId.value;
 
     const formData = {
-      procedimento: { sobrancelha, boca, olhos, capilar},
       valor,
+      procedimento,
       pagamento,
-      clientId,
+      client_id,
     }
 
     fetch("/createServices", {
@@ -56,7 +58,7 @@ const FormService = () => {
       <div>
         <label>
           Cliente:
-          <select name="clientId">
+          <select name="client_id">
             {clients.map((clients) => (
               <option key={clients.id} value={clients.id}>
                 {clients.nome}
@@ -68,28 +70,24 @@ const FormService = () => {
       <div style={{ display: 'flex' }}>
         <label style={{ marginRight: '10px' }}>
           Procedimento:
-        </label>
-        <label htmlFor="sobrancelha" style={{ marginRight: '10px' }}>
-          Sobrancelha
-          <input type="checkbox" name="sobrancelha" value="Sobrancelha" />
-        </label> 
-        <label htmlFor="boca" style={{ marginRight: '10px' }}>
-          Boca
-          <input type="checkbox" name="boca" value="Boca"  />
-        </label>
-        <label htmlFor="olhos" style={{ marginRight: '10px' }}>
-          Olhos
-          <input type="checkbox" name="olhos" value="Olhos" />
-        </label>
-        <label htmlFor="capilar" style={{ marginRight: '10px' }}>
-          Capilar
-          <input type="checkbox" name="capilar" value="Capilar"/>
+        <input type="text" name="procedimento" />
         </label>
       </div>
       <div>
         <label>
           Valor:
-          <input type="number" name="valor" />
+          <NumericFormat
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="R$ "
+            decimalScale={2}
+            fixedDecimalScale
+            allowNegative={false}
+            isNumericString
+            value={reais}
+            onValueChange={(value) => handleReaisChange(value)}
+            customInput={inputProps => <input name="valor" required {...inputProps} />}
+          />
         </label>
       </div>
       <div>
